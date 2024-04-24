@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto/models/residence.dart';
 
 class ResidenceDetailsScreen extends StatelessWidget {
-  // final Residencia residencia;
+  final Residence residence;
 
-  // const ResidenceDetailsScreen({Key? key, required this.residencia}) : super(key: key);
+  const ResidenceDetailsScreen({Key? key, required this.residence}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +17,8 @@ class ResidenceDetailsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Text('Nombre: ${residencia.nombre}'),
-            // Text('Descripción: ${residencia.descripcion}'),
-            // Aquí colocarías otros detalles de la residencia
+            Text('Nombre: ${residence.title}'),
+            Text('Descripción: ${residence.description}'),
           ],
         ),
       ),
