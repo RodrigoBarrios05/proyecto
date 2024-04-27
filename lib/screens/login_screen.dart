@@ -1,5 +1,9 @@
+import 'dart:js_util';
+
 import 'package:flutter/material.dart';
 import 'package:proyecto/screens/residences_offers_screen.dart';
+import 'package:proyecto/screens/register_screen.dart';
+import 'package:proyecto/models/student.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -17,7 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         title: Text('Login'),
       ),
-      body: _userLoggedIn ? ResidencesOffersScreen(username: 'usuario logeado',) : _buildLoginForm(),
+      body: _userLoggedIn ? ResidencesOffersScreen(estudiante: newObject(),) : _buildLoginForm(),
     );
   }
 
@@ -48,6 +52,13 @@ class _LoginScreenState extends State<LoginScreen> {
             },
             child: Text('Login'),
           ),
+          SizedBox(height: 32.0),
+          ElevatedButton(
+            onPressed: () {
+              _register(); // Llamada a la función _register() cuando se presiona el botón de inicio de sesión
+            },
+            child: Text('Register'),
+          ),
         ],
       ),
     );
@@ -60,13 +71,21 @@ class _LoginScreenState extends State<LoginScreen> {
     // Simulación de inicio de sesión exitoso
     bool loggedIn = true;
 
+    // Declaro un objeto estudiante de prueba, se supone que se llenara con la base de datos
+    Student estudiante=Student(address: 'Calle Oaxaca',name: _usernameController.text, age: 24,carrer: 'Ing Informatica',enrollment: 20443521,gender: 'hombre',password: _passwordController.text);
     if (loggedIn) {
       // Navegar a la pantalla de ofertas de residencias si el inicio de sesión es exitoso
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => ResidencesOffersScreen(username: _usernameController.text,)),
+        MaterialPageRoute(builder: (context) => ResidencesOffersScreen(estudiante: estudiante,)),
         (route) => false,
       );
     }
+  }
+  void _register(){
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => RegisterScreen()),
+    );
   }
 }

@@ -2,23 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:proyecto/db_residences.dart';
 import 'package:proyecto/models/residence.dart';
 import 'package:proyecto/widgets/residence_offer_card.dart';
+import 'package:proyecto/models/student.dart';
+import 'package:proyecto/screens/profile_screen.dart';
 
 class ResidencesOffersScreen extends StatelessWidget {
   final List<Residence> residencias = residences;
-  final String username;
+  final Student estudiante;
 
-  ResidencesOffersScreen({Key? key, required this.username}) : super(key: key);
-
+  ResidencesOffersScreen({Key? key, required this.estudiante }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Ofertas de residencia para $username'),
+        title: Text('Ofertas de residencia para ${estudiante.name}'),
         actions: [
           IconButton(
             onPressed: () {
               // Acción para acceder al perfil del usuario
               // Ejemplo: Navigator.pushNamed(context, '/perfil');
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProfileScreen(estudiante: estudiante)),
+              );
             },
             icon: Icon(Icons.person), // Icono para acceder al perfil
           ),
