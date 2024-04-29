@@ -2,6 +2,7 @@ import 'dart:js_util';
 
 import 'package:flutter/material.dart';
 import 'package:proyecto/models/residence.dart';
+import 'package:proyecto/models/student.dart';
 import 'package:proyecto/screens/login_screen.dart';
 import 'package:proyecto/screens/residence_details_screen.dart';
 import 'package:proyecto/screens/residences_offers_screen.dart';
@@ -23,6 +24,8 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginScreen(),
         '/residences_offers': (context) => ResidencesOffersScreen(estudiante: newObject(),),
         '/residence_details': (context) => ResidenceDetailsScreen(residence: Residence(),),
+        '/register_screen' : (context) => RegisterScreen(),
+        '/profile_screen' : (context) => ProfileScreen(estudiante: Student()),
       },
     );
   }
