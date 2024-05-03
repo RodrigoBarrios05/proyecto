@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:proyecto/models/user.dart';
 import 'package:proyecto/screens/residences_offers_screen.dart';
+import 'package:proyecto/screens/student_information_screen.dart';
 import 'package:proyecto/models/student.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -9,12 +12,8 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController _usernameController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
-  TextEditingController _ageController = TextEditingController();
-  TextEditingController _genderController = TextEditingController();
-  TextEditingController _carrerController = TextEditingController();
-  TextEditingController _addressController = TextEditingController();
-  TextEditingController _enrollmentController = TextEditingController();
   bool _userLoggedIn = false;
 
   @override
@@ -23,92 +22,85 @@ class _RegisterScreenState extends State<RegisterScreen> {
       appBar: AppBar(
         title: Text('Registro'),
       ),
-      body: _buildRegisterForm(),
+      body: _buildLoginForm(),
     );
   }
 
-  Widget _buildRegisterForm() {
-    return ListView(
+  Widget _buildLoginForm() {
+    return Padding(
       padding: const EdgeInsets.all(16.0),
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children:<Widget> [
-            TextField(
-              controller: _usernameController,
-              decoration: InputDecoration(
-                labelText: 'Nombre',
-              ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          TextField(
+            controller: _usernameController,
+            decoration: InputDecoration(
+              labelText: 'Username',
             ),
-            SizedBox(height: 16.0),
-            TextField(
-              controller: _passwordController,
-              obscureText: true,
-              decoration: InputDecoration(
-                labelText: 'Contraseña',
-              ),
+          ),
+          TextField(
+            controller: _emailController,
+            decoration: InputDecoration(
+              labelText: 'email',
             ),
-            SizedBox(height: 16.0),
-            TextField(
-              controller: _enrollmentController,
-              decoration: InputDecoration(
-                labelText: 'Matricula',
-              ),
+          ),
+          TextField(
+            controller: _passwordController,
+            obscureText: true,
+            decoration: InputDecoration(
+              labelText: 'Password',
             ),
-            SizedBox(height: 16.0),
-            TextField(
-              controller: _ageController,
-              decoration: InputDecoration(
-                labelText: 'Edad',
-              ),
-            ),
-            SizedBox(height: 16.0),
-            TextField(
-              controller: _carrerController,
-              decoration: InputDecoration(
-                labelText: 'Carrera',
-              ),
-            ),
-            SizedBox(height: 16.0),
-            TextField(
-              controller: _addressController,
-              decoration: InputDecoration(
-                labelText: 'Direccion',
-              ),
-            ),
-            SizedBox(height: 16.0),
-            TextField(
-              controller: _genderController,
-              decoration: InputDecoration(
-                labelText: 'Genero',
-              ),
-            ),
-            SizedBox(height: 32.0),
-            ElevatedButton(
-              onPressed: () {
-                _register(); // Llamada a la función _register() cuando se presiona el botón de inicio de sesión
-              },
-              child: Text('Registrar'),
-            ),
-          ],
-        ),
-      ],
+          ),
+          ElevatedButton(
+            onPressed: () {
+              _register(); // Llamada a la función _register() cuando se presiona el botón de inicio de sesión
+            },
+            child: Text('Register'),
+          ),
+        ],
+      ),
     );
   }
 
-  // Método para manejar el inicio de sesión
   void _register() {
-    // Lógica de inicio de sesión (aquí se puede agregar lógica de autenticación)
+    String username = _usernameController.text.trim();
+    String email = _emailController.text.trim();
+    String password = _passwordController.text;
 
-    // Simulación de inicio de sesión exitoso
-
-    Student estudiante=Student(address: _addressController.text,name: _usernameController.text, age: int.parse(_ageController.text),carrer: _carrerController.text,enrollment: int.parse(_enrollmentController.text),gender: _genderController.text,password: _passwordController.text);
-      // Navegar a la pantalla de ofertas de residencias si el inicio de sesión es exitoso
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => ResidencesOffersScreen( estudiante: estudiante,)),
-            (route) => false,
+    if (username.isEmpty || email.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Por favor, completa todos los campos'),
+          duration: Duration(seconds: 2),
+        ),
       );
+      return; // Sale de la función si algún campo está vacío
+    }
 
+    // Validar el formato del correo electrónico
+    if (!_isValidEmail(email)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Correo electrónico no válido'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return; // Sale de la función si el correo electrónico no es válido
+    }
+
+    // Si todos los campos están completos y el correo electrónico es válido, crear el usuario y navegar a la siguiente pantalla
+    User user = User(username: username, email: email, password: password);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => StudentInformationScreen(user: user)),
+    );
+  }
+
+// Función para validar el formato del correo electrónico
+  bool _isValidEmail(String email) {
+    // Utiliza una expresión regular para verificar si el formato del correo electrónico es válido
+    final emailRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    return emailRegExp.hasMatch(email);
   }
 }

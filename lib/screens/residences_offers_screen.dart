@@ -10,52 +10,40 @@ class ResidencesOffersScreen extends StatelessWidget {
   final Student estudiante;
 
   ResidencesOffersScreen({Key? key, required this.estudiante }) : super(key: key);
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Ofertas de residencia para ${estudiante.name}'),
         actions: [
-          IconButton(
-            onPressed: () {
-              // Acción para acceder al perfil del usuario
-              // Ejemplo: Navigator.pushNamed(context, '/perfil');
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ProfileScreen(estudiante: estudiante)),
-              );
-            },
-            icon: Icon(Icons.person), // Icono para acceder al perfil
-          ),
-        ],
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(50),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Buscar residencia...',
-                      border: OutlineInputBorder(),
-                    ),
-                    onChanged: (value) {
-                      // Lógica de búsqueda
-                    },
-                  ),
-                ),
-                SizedBox(width: 16),
-                IconButton(
-                  onPressed: () {
-                    // Acción para abrir el filtro
-                  },
-                  icon: Icon(Icons.filter_list), // Icono para abrir el filtro
-                ),
-              ],
+            IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfileScreen(estudiante: estudiante)),
+                );
+              },
+              icon: Icon(Icons.person), // Icono para acceder al perfil
             ),
+          Expanded(
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: 'Buscar residencia...',
+                  border: OutlineInputBorder(),
+                ),
+                onChanged: search,
+              ),
           ),
-        ),
+            IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfileScreen(estudiante: estudiante)),
+                );
+              },
+              icon: Icon(Icons.notifications), // Icono para acceder al perfil
+            ),
+        ],
       ),
       body: ListView.builder(
         itemCount: residencias.length,
@@ -64,5 +52,9 @@ class ResidencesOffersScreen extends StatelessWidget {
         },
       ),
     );
+  }
+
+  void search(String value) {
+    // Implementa la lógica de búsqueda aquí
   }
 }

@@ -22,8 +22,6 @@ Widget _buildInformation(){
       Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children:<Widget> [
-          Text('Matricula: ${estudiante.enrollment}')
-          ,SizedBox(height: 16.0),
           Text('Carrera: ${estudiante.carrer}')
           ,SizedBox(height: 16.0),
           Text('Genero: ${estudiante.gender}')

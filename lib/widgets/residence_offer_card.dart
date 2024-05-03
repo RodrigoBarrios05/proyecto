@@ -12,40 +12,67 @@ class ResidenceOfferCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.push(
-            context,
-            MaterialPageRoute(
+          context,
+          MaterialPageRoute(
             builder: (context) => ResidenceDetailsScreen(residence: residencia),
           ),
         );
       },
-    child: Card(
+      child: Card(
+        elevation: 4, // Added elevation for a subtle shadow effect
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(12.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 residencia.title ?? '',
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
+                  color: Colors.deepPurple, // Title color
                 ),
               ),
               SizedBox(height: 8),
               Text(
                 'Dirección: ${residencia.address ?? ''}',
-                style: TextStyle(fontSize: 16),
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.grey[800], // Address color
+                ),
               ),
               SizedBox(height: 8),
               Text(
-                'Fecha de publicación: ${residencia.publishedDate != null ? residencia.publishedDate!.toString().substring(0, 10) : ''}',
-                style: TextStyle(fontSize: 16),
+                'Fecha de publicación: ${calculateDaysSincePublication(residencia.publishedDate)}',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey[600], // Date color
+                ),
               ),
             ],
           ),
         ),
-      )
+        color: Colors.grey[200], // Background color of the card
+      ),
     );
   }
 }
 
+String calculateDaysSincePublication(DateTime? publishedDate) {
+  if (publishedDate == null) return '';
+
+  final now = DateTime.now();
+  final difference = now.difference(publishedDate);
+  final days = difference.inDays;
+
+  if (days == 0) {
+    return 'Hoy';
+  } else if (days == 1) {
+    return 'Hace 1 día';
+  } else {
+    return 'Hace $days días';
+  }
+}

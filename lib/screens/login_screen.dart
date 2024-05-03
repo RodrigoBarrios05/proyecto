@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:proyecto/screens/residences_offers_screen.dart';
 import 'package:proyecto/screens/register_screen.dart';
+import 'package:proyecto/screens/residences_offers_screen.dart';
 import 'package:proyecto/models/student.dart';
+
 
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
+
+Student fakeStudent = Student(username: 'asd', email: 'papure@gmail.com', password: 'secret');
 
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController _usernameController = TextEditingController();
@@ -19,9 +22,14 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         title: Text('Login'),
       ),
-      body: _userLoggedIn ? ResidencesOffersScreen(estudiante: Student(),) : _buildLoginForm(),
+      body: _userLoggedIn
+          ? ResidencesOffersScreen(
+              estudiante: fakeStudent
+            )
+          : _buildLoginForm(),
     );
   }
+
 
   Widget _buildLoginForm() {
     return Padding(
@@ -62,25 +70,27 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  // Método para manejar el inicio de sesión
   void _login() {
-    // Lógica de inicio de sesión (aquí se puede agregar lógica de autenticación)
-
-    // Simulación de inicio de sesión exitoso
     bool loggedIn = true;
 
-    // Declaro un objeto estudiante de prueba, se supone que se llenara con la base de datos
-    Student estudiante=Student(address: 'Calle Oaxaca',name: _usernameController.text, age: 24,carrer: 'Ing Informatica',enrollment: 20443521,gender: 'hombre',password: _passwordController.text);
+    /*if(_passwordController.toString() == db.getPassword() && _usernameController == db.getUsername){
+      loggedIn = true;
+    }*/
+
+
     if (loggedIn) {
-      // Navegar a la pantalla de ofertas de residencias si el inicio de sesión es exitoso
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => ResidencesOffersScreen(estudiante: estudiante,)),
+        MaterialPageRoute(
+            builder: (context) => ResidencesOffersScreen(
+                  estudiante: fakeStudent,
+                )),
         (route) => false,
       );
     }
   }
-  void _register(){
+
+  void _register() {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => RegisterScreen()),
