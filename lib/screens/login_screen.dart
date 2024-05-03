@@ -1,5 +1,3 @@
-import 'dart:js_util';
-
 import 'package:flutter/material.dart';
 import 'package:proyecto/screens/residences_offers_screen.dart';
 import 'package:proyecto/screens/register_screen.dart';
@@ -21,7 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         title: Text('Login'),
       ),
-      body: _userLoggedIn ? ResidencesOffersScreen(estudiante: newObject(),) : _buildLoginForm(),
+      body: _userLoggedIn ? ResidencesOffersScreen(estudiante: Student(),) : _buildLoginForm(),
     );
   }
 

@@ -1,5 +1,3 @@
-import 'dart:js_util';
-
 import 'package:flutter/material.dart';
 import 'package:proyecto/models/residence.dart';
 import 'package:proyecto/models/student.dart';
@@ -22,7 +20,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/login',
       routes: {
         '/login': (context) => LoginScreen(),
-        '/residences_offers': (context) => ResidencesOffersScreen(estudiante: newObject(),),
+        '/residences_offers': (context) => ResidencesOffersScreen(estudiante: Student(),),
         '/residence_details': (context) => ResidenceDetailsScreen(residence: Residence(),),
         '/register_screen' : (context) => RegisterScreen(),
         '/profile_screen' : (context) => ProfileScreen(estudiante: Student()),
